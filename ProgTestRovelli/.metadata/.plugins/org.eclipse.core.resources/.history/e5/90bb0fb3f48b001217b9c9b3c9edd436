@@ -1,0 +1,93 @@
+
+public class Justifier implements IBaseJustifier{
+	
+	/**
+	 * Constructeur prenant en param�tre un entier d�finissant 
+	 * le nombre de caract�res de justification.
+	 * 
+	 * @param nbChar
+	 */
+	private int nbChar;
+	private String text="";
+	private JustifierTest myJustifierTest = new JustifierTest();
+	private static int CHAR_COUNT;
+	private static int LINE_COUNT;
+	private static int WORD_COUNT;
+	
+	public Justifier(int nbChar){
+		this.nbChar =nbChar;
+	}
+	
+	/**
+	 * Constructeur par d�faut justifie � 30 caract�res
+	 */
+	public Justifier(){
+		this.nbChar=30;
+	}
+	
+	public int getTextProperty(int sentence){
+		
+		
+		return sentence;
+	}
+
+	public static int getCHAR_COUNT() {
+		return CHAR_COUNT;
+	}
+
+	public static int getLINE_COUNT() {
+		return LINE_COUNT;
+	}
+
+	public static int getWORD_COUNT() {
+		return WORD_COUNT;
+	}
+
+	@Override
+	public void displayText() {
+		System.out.println(text);		
+	}
+
+	@Override
+	public void appendText(String textToAppend) {
+		if(text.isEmpty()){
+			this.text += textToAppend;
+		}
+		else{
+			this.text += " "+textToAppend;
+		}
+		myJustifierTest.testAppendText(textToAppend);
+	}
+
+	@Override
+	public String justifyText() {
+		if(!text.isEmpty()){
+			if(text.length()>nbChar){
+				String[] arrayText=text.split(" ");
+				myJustifierTest.testJustifyText(arrayText, nbChar);
+				
+				String justifiedText="";
+				String tmpText="";
+				for(int i=0; i<arrayText.length; i++){
+					if(tmpText.isEmpty()){
+						tmpText=arrayText[i];
+					}
+					else{
+						if((tmpText.length()+arrayText[i].length())<nbChar){
+							tmpText += " "+arrayText[i];
+						}
+						else{
+							justifiedText += tmpText+System.getProperty("line.separator");
+							tmpText = arrayText[i];
+						}
+					}
+				}			
+				return justifiedText;
+			}
+			return text;
+		}
+		return null;
+	}
+
+	
+}
